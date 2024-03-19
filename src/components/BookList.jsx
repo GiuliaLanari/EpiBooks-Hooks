@@ -39,7 +39,7 @@ const BookList = function (props) {
           </Row>
         </Col>
         <Col xs={12} md={3} className="text-center">
-          <div className="sticky-sm-top border">{asin !== "" && <CommentArea asin={asin} />}</div>
+          <div className="sticky-sm-top text-white bg-comment p-2">{asin !== "" && <CommentArea asin={asin} />}</div>
         </Col>
       </Row>
     </>

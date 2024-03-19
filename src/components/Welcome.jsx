@@ -1,15 +1,19 @@
-import { Alert } from "react-bootstrap";
+import Alert from "react-bootstrap/Alert";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 const Welcome = function () {
   return (
-    <>
-      {["info"].map((variant) => (
-        <Alert key={variant} variant={variant} className="m-3">
-          Sconto super conveniente fino al primo Giugno 2024!
-        </Alert>
-      ))}
-      <h2 className="text-center my-4">Shop Online</h2>
-    </>
+    <Row className="justify-content-around">
+      <Col xs={6} className="justify-content-center">
+        {["info"].map((variant) => (
+          <Alert key={variant} variant={variant} className="m-3 " id="bg-alert">
+            Sconto super conveniente fino al primo Giugno 2024!
+          </Alert>
+        ))}
+        <h2 className="text-center my-4">Shop Online</h2>
+      </Col>
+    </Row>
   );
 };
 

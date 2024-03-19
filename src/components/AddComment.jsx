@@ -6,28 +6,9 @@ const AuthenticationKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY4NWU0ZWFiYWQyODAwMTliZDUyZTgiLCJpYXQiOjE3MTA3NzU4ODYsImV4cCI6MTcxMTk4NTQ4Nn0.QQO5inbMAY6-SH78hrhW8FwlTFKyBlyMq8PA3h0jEFc";
 
 const AddComment = function (props) {
-  // state = {
-  //   comment: {
-  //     comment: "",
-  //     rate: 1,
-  //     elementId: this.props.asin,
-  //   },
-  // };
-
   const [comment, setComment] = useState("");
   const [rate, setRate] = useState(1);
   const [elementId, setElementId] = useState(props.asin);
-
-  //  componentDidUpdate(prevProps) {
-  //     if (prevProps.asin !== this.props.asin) {
-  //       this.setState({
-  //         comment: {
-  //           ...this.state.comment,
-  //           elementId: this.props.asin,
-  //         },
-  //       });
-  //     }
-  //   }
 
   useEffect(() => {
     setElementId(props.asin);
@@ -37,7 +18,7 @@ const AddComment = function (props) {
     e.preventDefault();
     fetch("https://striveschool-api.herokuapp.com/api/comments/", {
       method: "POST",
-      body: JSON.stringify(comment),
+      body: JSON.stringify({ comment, rate, elementId }),
       headers: {
         Authorization: "Bearer " + AuthenticationKey,
         "Content-Type": "application/json",

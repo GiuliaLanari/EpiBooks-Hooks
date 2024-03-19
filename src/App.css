@@ -1,0 +1,23 @@
+body {
+  background-image: url("https://images.pexels.com/photos/129731/pexels-photo-129731.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  object-fit: cover;
+}
+
+.bg-comment {
+  background-color: #0000006e;
+  border-radius: 20px;
+}
+
+#bg-alert {
+  background-color: #4caf9ac2;
+  border: none;
+  color: black;
+}
+
+.bg-badge {
+  background-color: #70b194;
+  padding-block: 0.2rem;
+  padding-inline: 0.5rem;
+  border-radius: 10px;
+  color: white;
+}

@@ -31,15 +31,8 @@ const ComponentArea = function (props) {
   };
   useEffect(() => {
     fetchCommenti();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.asin]);
-  // componentDidMount() {
-  //   this.fetchCommenti();
-  // }
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevProps.asin !== this.props.asin) {
-  //     this.fetchCommenti();
-  //   }
-  // }
 
   return (
     <>
