@@ -1,35 +1,43 @@
-import { Component } from "react";
+import { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 const AuthenticationKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY4NWU0ZWFiYWQyODAwMTliZDUyZTgiLCJpYXQiOjE3MTA3NzU4ODYsImV4cCI6MTcxMTk4NTQ4Nn0.QQO5inbMAY6-SH78hrhW8FwlTFKyBlyMq8PA3h0jEFc";
 
-class AddComment extends Component {
-  state = {
-    comment: {
-      comment: "",
-      rate: 1,
-      elementId: this.props.asin,
-    },
-  };
+const AddComment = function (props) {
+  // state = {
+  //   comment: {
+  //     comment: "",
+  //     rate: 1,
+  //     elementId: this.props.asin,
+  //   },
+  // };
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.asin !== this.props.asin) {
-      this.setState({
-        comment: {
-          ...this.state.comment,
-          elementId: this.props.asin,
-        },
-      });
-    }
-  }
+  const [comment, setComment] = useState("");
+  const [rate, setRate] = useState(1);
+  const [elementId, setElementId] = useState(props.asin);
 
-  addCommento = (e) => {
+  //  componentDidUpdate(prevProps) {
+  //     if (prevProps.asin !== this.props.asin) {
+  //       this.setState({
+  //         comment: {
+  //           ...this.state.comment,
+  //           elementId: this.props.asin,
+  //         },
+  //       });
+  //     }
+  //   }
+
+  useEffect(() => {
+    setElementId(props.asin);
+  }, [props.asin]);
+
+  const addCommento = (e) => {
     e.preventDefault();
     fetch("https://striveschool-api.herokuapp.com/api/comments/", {
       method: "POST",
-      body: JSON.stringify(this.state.comment),
+      body: JSON.stringify(comment),
       headers: {
         Authorization: "Bearer " + AuthenticationKey,
         "Content-Type": "application/json",
@@ -38,14 +46,10 @@ class AddComment extends Component {
       .then((response) => {
         if (response.ok) {
           window.alert("Commento pubblicato!");
-          this.props.fetch();
-          this.setState({
-            comment: {
-              comment: "",
-              rate: 1,
-              elementId: this.props.asin,
-            },
-          });
+          props.fetch();
+          setComment("");
+          setRate(1);
+          setElementId(props.asin);
         } else {
           window.alert("Riprova più tardi!");
           throw new Error("Errore nel salvataggio del commento");
@@ -56,58 +60,46 @@ class AddComment extends Component {
       });
   };
 
-  render() {
-    return (
-      <>
-        <Form onSubmit={this.addCommento}>
-          <Form.Group className="mb-3">
-            <Form.Label>Aggiungi il tuo commento:</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={2}
-              onChange={(e) => {
-                this.setState({
-                  comment: {
-                    ...this.state.comment,
-                    comment: e.target.value,
-                  },
-                });
-              }}
-              value={this.state.comment.comment}
-              required
-            />
-          </Form.Group>
+  return (
+    <>
+      <Form onSubmit={addCommento}>
+        <Form.Group className="mb-3">
+          <Form.Label>Aggiungi il tuo commento:</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={2}
+            onChange={(e) => {
+              setComment(e.target.value);
+            }}
+            value={comment}
+            required
+          />
+        </Form.Group>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Voto?</Form.Label>
-            <Form.Select
-              aria-label="Default select example"
-              onChange={(e) => {
-                this.setState({
-                  comment: {
-                    ...this.state.comment,
-                    rate: e.target.value,
-                  },
-                });
-              }}
-              value={this.state.comment.rate}
-              required
-            >
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </Form.Select>
-          </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Voto?</Form.Label>
+          <Form.Select
+            aria-label="Default select example"
+            onChange={(e) => {
+              setRate(e.target.value);
+            }}
+            value={rate}
+            required
+          >
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </Form.Select>
+        </Form.Group>
 
-          <Button variant="success" type="submit">
-            Pubblica
-          </Button>
-        </Form>
-      </>
-    );
-  }
-}
+        <Button variant="success" type="submit">
+          Pubblica
+        </Button>
+      </Form>
+    </>
+  );
+};
 
 export default AddComment;

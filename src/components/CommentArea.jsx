@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { useState, useEffect } from "react";
 
 import CommentsList from "../components/CommentsList";
 import AddComment from "../components/AddComment";
@@ -6,13 +6,11 @@ import AddComment from "../components/AddComment";
 const AuthenticationKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWY4NWU0ZWFiYWQyODAwMTliZDUyZTgiLCJpYXQiOjE3MTA3NzU4ODYsImV4cCI6MTcxMTk4NTQ4Nn0.QQO5inbMAY6-SH78hrhW8FwlTFKyBlyMq8PA3h0jEFc";
 
-class ComponentArea extends Component {
-  state = {
-    commenti: [],
-  };
+const ComponentArea = function (props) {
+  const [commenti, setCommenti] = useState([]);
 
-  fetchCommenti = () => {
-    fetch("https://striveschool-api.herokuapp.com/api/comments/" + this.props.asin, {
+  const fetchCommenti = () => {
+    fetch("https://striveschool-api.herokuapp.com/api/comments/" + props.asin, {
       headers: {
         Authorization: "Bearer " + AuthenticationKey,
       },
@@ -25,32 +23,30 @@ class ComponentArea extends Component {
         }
       })
       .then((commentiArrey) => {
-        this.setState({
-          commenti: commentiArrey,
-        });
+        setCommenti(commentiArrey);
       })
       .catch((error) => {
         console.log("ERRORE", error);
       });
   };
+  useEffect(() => {
+    fetchCommenti();
+  }, [props.asin]);
+  // componentDidMount() {
+  //   this.fetchCommenti();
+  // }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevProps.asin !== this.props.asin) {
+  //     this.fetchCommenti();
+  //   }
+  // }
 
-  componentDidMount() {
-    this.fetchCommenti();
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.asin !== this.props.asin) {
-      this.fetchCommenti();
-    }
-  }
-
-  render() {
-    return (
-      <>
-        <CommentsList commenti={this.state.commenti} />
-        <AddComment asin={this.props.asin} fetch={this.fetchCommenti} />
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <CommentsList commenti={commenti} />
+      <AddComment asin={props.asin} fetch={fetchCommenti} />
+    </>
+  );
+};
 
 export default ComponentArea;
