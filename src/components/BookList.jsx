@@ -33,9 +33,17 @@ const BookList = function (props) {
           <Row>
             {props.arreyLibri
               .filter((element) => element.title.toLowerCase().includes(searchQuery))
-              .map((element) => (
-                <SingleBook libro={element} asin={asin} changeCardSelected={changeCardSelected} key={element.asin} />
-              ))}
+              .map((element) => {
+                return (
+                  <SingleBook
+                    libro={element}
+                    asin={asin}
+                    changeCardSelected={changeCardSelected}
+                    key={element.asin}
+                    data-testid="cards"
+                  />
+                );
+              })}
           </Row>
         </Col>
         <Col xs={12} md={3} className="text-center">
