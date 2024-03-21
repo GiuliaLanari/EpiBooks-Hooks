@@ -5,7 +5,7 @@ import CardText from "react-bootstrap/CardText";
 
 const SingleBook = function (props) {
   return (
-    <Col xs={12} md={4} lg={3} xl={3} className=" mt-4" data-testid="cards">
+    <Col xs={12} md={4} lg={3} xl={3} className=" mt-4" data-testid="card">
       <Card
         className={
           props.asin === props.libro.asin ? " bg-dark bg-gradient text-white  border-3" : " border border-light-subtle"

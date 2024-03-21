@@ -47,8 +47,8 @@ const AddComment = function (props) {
         <Form.Group className="mb-3">
           <Form.Label>Aggiungi il tuo commento:</Form.Label>
           <Form.Control
-            as="textarea"
-            rows={2}
+            type="text"
+            placeholder="Inserisci qui il testo"
             onChange={(e) => {
               setComment(e.target.value);
             }}
