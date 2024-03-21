@@ -35,13 +35,7 @@ const BookList = function (props) {
               .filter((element) => element.title.toLowerCase().includes(searchQuery))
               .map((element) => {
                 return (
-                  <SingleBook
-                    libro={element}
-                    asin={asin}
-                    changeCardSelected={changeCardSelected}
-                    key={element.asin}
-                    data-testid="cards"
-                  />
+                  <SingleBook libro={element} asin={asin} changeCardSelected={changeCardSelected} key={element.asin} />
                 );
               })}
           </Row>

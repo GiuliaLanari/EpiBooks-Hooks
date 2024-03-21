@@ -35,10 +35,10 @@ const ComponentArea = function (props) {
   }, [props.asin]);
 
   return (
-    <>
+    <div data-testid="commenti">
       <CommentsList commenti={commenti} />
       <AddComment asin={props.asin} fetch={fetchCommenti} />
-    </>
+    </div>
   );
 };
 
